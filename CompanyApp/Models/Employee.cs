@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CompanyApp.DTOs;
 
 namespace CompanyApp.Models
 {
@@ -27,6 +28,16 @@ namespace CompanyApp.Models
         public Employee()
         {
 
+        }
+
+        public Employee(EmployeeDTO employeeDTO)
+        {
+            this.ID = employeeDTO.ID;
+            this.Name = employeeDTO.Name;
+            this.Surname = employeeDTO.Surname;
+            this.Salary = employeeDTO.Salary;
+            this.Department = employeeDTO.Department;
+            this.IsOnLeave = employeeDTO.IsOnLeave;
         }
     }
 }
