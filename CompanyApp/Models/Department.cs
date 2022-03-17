@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CompanyApp.DTOs;
 
 namespace CompanyApp.Models
 {
@@ -13,6 +14,14 @@ namespace CompanyApp.Models
         public Department()
         {
 
+        }
+
+        public Department(DepartmentDTO departmentDTO)
+        {
+            this.ID = departmentDTO.ID;
+            this.BudgetYearly = departmentDTO.BudgetYearly;
+            this.Name = departmentDTO.Name;
+            this.Location = departmentDTO.Location;
         }
     }
 }
