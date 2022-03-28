@@ -1,0 +1,71 @@
+﻿@model CompanyApp.ViewModels.EmployeeFormViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string headerMessageMain = null;
+    string headerMessageBottom = null;
+    switch (Model.FormType)
+    {
+        case CompanyApp.ViewModels.EmployeeFormViewModel.NewForm:
+            headerMessageMain = "Add New Employee";    
+            headerMessageBottom = "Provide the details";    
+            ViewBag.Title = "Add Employee";
+            break;
+        case CompanyApp.ViewModels.EmployeeFormViewModel.EditForm:
+            headerMessageMain = "Edit Employee";    
+            headerMessageBottom = $"{Model.Employee.Name} {Model.Employee.Surname}";    
+            ViewBag.Title = $"Edit Employee - {Model.Employee.Name} {Model.Employee.Surname}";
+            break;
+        default:
+            ViewBag.Title = $"Employee Form - {Model.FormType1}";
+            break;
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">@headerMessageMain</h1>
+    <p>@headerMessageBottom</p>
+</div>
+
+@using(Html.BeginForm("Save","Employees"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Employee.Name)
+        @Html.TextBoxFor(m => m.Employee.Name, new {@class="form-control"})
+        @Html.ValidationMessageFor(m=>m.Employee.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Employee.Surname)
+        @Html.TextBoxFor(m => m.Employee.Surname, new {@class="form-control"})
+        @Html.ValidationMessageFor(m=>m.Employee.Surname)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Employee.Department)
+        @Html.DropDownListFor(m => m.Employee.Department.ID, new SelectList(Model.Departments, "ID", "Name"), "", new {@class="form-control"})
+        @Html.ValidationMessageFor(m=>m.Employee.Department)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Employee.Salary)
+        @Html.TextBoxFor(m => m.Employee.Salary, new {@class="form-control"})
+        @Html.ValidationMessageFor(m=>m.Employee.Department)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Employee.IsOnLeave)
+        @Html.CheckBoxFor(m => m.Employee.IsOnLeave, new {@class="form-control"})
+    </div>
+
+    @Html.HiddenFor(m => m.Employee.ID);
+
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary();
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@*
+        @Html.DropDownListFor(m => m.Employee.Department.ID, new SelectList(Model.Departments, "ID", "Name"), "", new {@class="form-control"})
+*@

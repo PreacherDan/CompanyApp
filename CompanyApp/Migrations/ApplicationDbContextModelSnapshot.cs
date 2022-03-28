@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CompanyApp.Data.Migrations
+namespace CompanyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace CompanyApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -34,25 +34,53 @@ namespace CompanyApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Department");
+                    b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            BudgetYearly = 750000,
+                            Location = "Cracow",
+                            Name = "IT"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            BudgetYearly = 1000000,
+                            Location = "Warsaw",
+                            Name = "R&D"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            BudgetYearly = 80000,
+                            Location = "Cracow",
+                            Name = "Management"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            BudgetYearly = 500000,
+                            Location = "Warsaw",
+                            Name = "Finance"
+                        });
                 });
 
             modelBuilder.Entity("CompanyApp.Models.Employee", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");

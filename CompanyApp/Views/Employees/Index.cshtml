@@ -1,0 +1,46 @@
+﻿@model List<CompanyApp.DTOs.EmployeeDTO>
+
+@{
+    string headerMessage = null;
+    
+    ViewData["Title"] = "All Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (!Model.Any())
+{
+    headerMessage = "No Employees yet!";
+}
+else
+{
+    headerMessage = "List of All Employees";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Employees</h1>
+    <p>@headerMessage</p>
+</div>
+
+@Html.ActionLink("Add Employee", "New", "Employees", null, new{ @class ="btn btn-primary"})
+
+@if(Model.Any())
+{
+    <table>        
+        <tr> 
+            <th>Name</th>
+            <th>Department</th> @*HEADERS*@
+            <th>Salary</th>
+            <th>Options</th>
+        </tr>
+
+        @foreach(CompanyApp.DTOs.EmployeeDTO emp in Model)
+        {
+             <tr>
+                <td>@String.Format("{0} {1}", emp.Name, emp.Surname)</td>
+                <td>@emp.Department.Name</td>
+                <td>@emp.Salary</td>
+                <td> @Html.ActionLink("Details", "Details","Employees", new{ id=emp.ID}) Edit Delete</td>
+            </tr>
+        }
+    </table>
+}

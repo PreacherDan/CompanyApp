@@ -5,23 +5,24 @@ namespace CompanyApp.DTOs
 {
     public class EmployeeDTO
     {
-        [Required]
-        public int? ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
+        [Required(ErrorMessage ="Employee ID Required")]
+        public int ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
 
-        [Required]
+        [Required(ErrorMessage ="Employee Name Required")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Employee Surname Required")]
         public string Surname { get; set; }
 
-        [Required]
         //[ConformsWithBudget] // custom validation class
+        [Required(ErrorMessage = "Employee Salary Required")]
         public int? Salary { get; set; }
 
+        [Display(Name="Is On Leave?")]
         public bool IsOnLeave { get; set; }
 
         // navigation property
-        public Department Department { get; set; }
+        public DepartmentDTO Department { get; set; }
         //public byte DepartmentID { get; set; } // not required in newer convention !
 
         public EmployeeDTO()
@@ -35,7 +36,7 @@ namespace CompanyApp.DTOs
             this.Name = employee.Name;
             this.Surname = employee.Surname;
             this.Salary = employee.Salary;
-            this.Department = employee.Department;
+            this.Department = new DepartmentDTO(employee.Department);
             this.IsOnLeave = employee.IsOnLeave;
         }
     }

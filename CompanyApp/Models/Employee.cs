@@ -6,7 +6,7 @@ namespace CompanyApp.Models
     public class Employee
     {
         [Required]
-        public int? ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
+        public int ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
 
         [Required]
         public string Name { get; set; }
@@ -18,11 +18,11 @@ namespace CompanyApp.Models
         //[ConformsWithBudget] // custom validation class
         public int? Salary { get; set; }
 
+        [Display(Name="Is On Leave?")]
         public bool IsOnLeave { get; set; }
 
         // navigation property
         public Department Department { get; set; }
-
         //public byte DepartmentID { get; set; } // not required in newer convention !
 
         public Employee()
@@ -36,7 +36,7 @@ namespace CompanyApp.Models
             this.Name = employeeDTO.Name;
             this.Surname = employeeDTO.Surname;
             this.Salary = employeeDTO.Salary;
-            this.Department = employeeDTO.Department;
+            this.Department = new Department(employeeDTO.Department);
             this.IsOnLeave = employeeDTO.IsOnLeave;
         }
     }
