@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CompanyApp.Models;
+using CompanyApp.DTOs;
 
 namespace CompanyApp.Data
 {
@@ -25,5 +26,14 @@ namespace CompanyApp.Data
                 new Department() { ID = 4, Name = "Finance", BudgetYearly = 500000, Location = "Warsaw" }
                 );
         }
+
+        //public override void Dispose()
+        //{   
+        //    //Database.ExecuteSqlRaw("SET IDENTITY_INSERT Departments OFF;");
+        //    base.Dispose();
+        //}
+
+        //Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> entityEntry = null;
+        //entityEntry = _context.Employees.Add(new Employee(employee));
     }
 }

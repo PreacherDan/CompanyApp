@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using CompanyApp.Models;
 using CompanyApp.DTOs;
 using CompanyApp.ViewModels;
 using CompanyApp.Data;
+//using System.Data.SqlTypes;
+//using System.Data.SqlClient;
+
 
 namespace CompanyApp.Controllers
 {
@@ -13,8 +17,9 @@ namespace CompanyApp.Controllers
         public EmployeesController(ApplicationDbContext context)
         {
             this._context = context;
-            //_context.Database.EnsureCreated();
-            //_context.Database.EnsureDeleted();
+
+            ////////context.Database.EnsureDeleted();
+            ////////_context.Database.EnsureCreated();
         }
 
         [Route("employees/all")]
@@ -22,7 +27,7 @@ namespace CompanyApp.Controllers
         {            
             return View(_context.Employees.ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>());
 
-            //_context.Database.EnsureDeleted();
+            _context.Database.EnsureDeleted();
             //return new ViewResult();
         }
 
@@ -36,12 +41,12 @@ namespace CompanyApp.Controllers
         }        
 
         [HttpPost]
-        public IActionResult Save(EmployeeDTO employee)
+        public IActionResult Save([FromForm] EmployeeDTO employee)
         {
             //employee.Department = _context.Departments.ToList<Department>().Single<Department>(d => d.ID == employee.ID);
             
-            foreach(var dept in _context.Departments.ToList())
-                if (dept.ID == employee.Department.ID) employee.Department = new DepartmentDTO(dept);
+            //foreach(var dept in _context.Departments.ToList())
+                //if (dept.ID == employee.Department.ID) employee.Department = new DepartmentDTO(dept);
 
             if (!ModelState.IsValid)
             {
@@ -55,21 +60,33 @@ namespace CompanyApp.Controllers
                 Console.WriteLine($"Validation falied for {employee.Name} {employee.Surname}!");
                 return View("EmployeeForm", viewModel);
             }
-            
-            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> entityEntry = null;
-            if (employee.ID == 0) // creating new emp
-                entityEntry = _context.Employees.Add(new Employee(employee));
-            else // editing emp (todo-automapper)
+
+            _context.Database.OpenConnection();
+            try
             {
-                var empFromDb = _context.Employees.Single(e => e.ID == employee.ID);
-                empFromDb.Name = employee.Name;
-                empFromDb.Salary = employee.Salary;
-                empFromDb.Surname = employee.Surname;
-                empFromDb.Department = new Department(employee.Department);
-                empFromDb.IsOnLeave = employee.IsOnLeave;
+                if (employee.ID == 0) // creating new emp
+                    _context.Employees.Add(new Employee(employee));
+                else // editing emp (todo-automapper)
+                {
+                    var empFromDb = _context.Employees.Single(e => e.ID == employee.ID);
+
+                    empFromDb.Name = employee.Name;
+                    empFromDb.Salary = employee.Salary;
+                    empFromDb.Surname = employee.Surname;
+                    //empFromDb.Department = new Department(employee.Department);
+                    empFromDb.Department.ID = employee.Department.ID;
+                    empFromDb.IsOnLeave = employee.IsOnLeave;
+                }
+
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
+            }
+            finally
+            {
+                _context.Database.CloseConnection();
             }
 
-            _context.SaveChanges();
             return RedirectToAction("Index", "Employees");
         }
 

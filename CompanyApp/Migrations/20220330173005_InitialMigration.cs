@@ -54,8 +54,8 @@ namespace CompanyApp.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BudgetYearly = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -190,6 +190,17 @@ namespace CompanyApp.Migrations
                         principalTable: "Departments",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Departments",
+                columns: new[] { "ID", "BudgetYearly", "Location", "Name" },
+                values: new object[,]
+                {
+                    { 1, 750000, "Cracow", "IT" },
+                    { 2, 1000000, "Warsaw", "R&D" },
+                    { 3, 80000, "Cracow", "Management" },
+                    { 4, 500000, "Warsaw", "Finance" }
                 });
 
             migrationBuilder.CreateIndex(

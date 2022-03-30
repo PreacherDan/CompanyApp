@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220324133614_PopulateDepartments")]
-    partial class PopulateDepartments
+    [Migration("20220330173005_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,11 +36,9 @@ namespace CompanyApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Location")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -80,11 +78,11 @@ namespace CompanyApp.Migrations
 
             modelBuilder.Entity("CompanyApp.Models.Employee", b =>
                 {
-                    b.Property<int?>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("DepartmentID")
                         .HasColumnType("int");
