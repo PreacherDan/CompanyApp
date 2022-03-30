@@ -18,7 +18,7 @@ namespace CompanyApp.Controllers
             _logger = logger;
 
             _context = context;//this._context = new ApplicationDbContext(options => option.UseSqlServer(options.ConnectionString));
-            _context.Database.EnsureCreated();
+            //_context.Database.EnsureCreated();
             //_context.Database.Migrate();
             //_context.Database.EnsureDeleted();
         }

@@ -18,16 +18,14 @@ namespace CompanyApp.Controllers
         {
             this._context = context;
 
-            ////////context.Database.EnsureDeleted();
-            ////////_context.Database.EnsureCreated();
+            //_context.Database.EnsureDeleted();  //delete migrations folder. run app, call ensuredeleted(). add-migration Initial, update-db, call ensurecreated()
+            //_context.Database.EnsureCreated();
         }
 
         [Route("employees/all")]
         public IActionResult Index()
         {            
             return View(_context.Employees.ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>());
-
-            _context.Database.EnsureDeleted();
             //return new ViewResult();
         }
 
