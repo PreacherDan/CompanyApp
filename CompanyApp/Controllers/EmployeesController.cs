@@ -22,10 +22,17 @@ namespace CompanyApp.Controllers
             //_context.Database.EnsureCreated();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            this._context.Dispose();
+            base.Dispose(disposing);
+        }
+
         [Route("employees/all")]
         public IActionResult Index()
-        {            
-            return View(_context.Employees.ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>());
+        {
+            var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>();
+            return View(empsWithDepts);
             //return new ViewResult();
         }
 
@@ -45,7 +52,7 @@ namespace CompanyApp.Controllers
             
             //foreach(var dept in _context.Departments.ToList())
                 //if (dept.ID == employee.Department.ID) employee.Department = new DepartmentDTO(dept);
-
+                    
             if (!ModelState.IsValid)
             {
                 var depts = _context.Departments.ToList();
@@ -72,13 +79,15 @@ namespace CompanyApp.Controllers
                     empFromDb.Salary = employee.Salary;
                     empFromDb.Surname = employee.Surname;
                     //empFromDb.Department = new Department(employee.Department);
-                    empFromDb.Department.ID = employee.Department.ID;
+                    //empFromDb.Department.ID = employee.Department.ID;
+                    empFromDb.DepartmentID = employee.DepartmentID;
                     empFromDb.IsOnLeave = employee.IsOnLeave;
                 }
 
-                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");
+                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");
+                
                 _context.SaveChanges();
-                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
+                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
             }
             finally
             {

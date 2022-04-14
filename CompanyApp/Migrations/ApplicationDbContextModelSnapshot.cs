@@ -312,7 +312,7 @@ namespace CompanyApp.Migrations
             modelBuilder.Entity("CompanyApp.Models.Employee", b =>
                 {
                     b.HasOne("CompanyApp.Models.Department", "Department")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -369,6 +369,11 @@ namespace CompanyApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyApp.Models.Department", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

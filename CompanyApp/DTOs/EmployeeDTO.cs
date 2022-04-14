@@ -22,8 +22,10 @@ namespace CompanyApp.DTOs
         public bool IsOnLeave { get; set; }
 
         // navigation property
-        public DepartmentDTO Department { get; set; }
+        public DepartmentDTO? Department { get; set; }
         //public byte DepartmentID { get; set; } // not required in newer convention !
+
+        public int DepartmentID { get; set; }
 
         public EmployeeDTO()
         {
@@ -38,6 +40,8 @@ namespace CompanyApp.DTOs
             this.Salary = employee.Salary;
             this.Department = new DepartmentDTO(employee.Department);
             this.IsOnLeave = employee.IsOnLeave;
+
+            this.DepartmentID = employee.DepartmentID;
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220330232942_InitialMigration0")]
-    partial class InitialMigration0
+    [Migration("20220414134407_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -314,7 +314,7 @@ namespace CompanyApp.Migrations
             modelBuilder.Entity("CompanyApp.Models.Employee", b =>
                 {
                     b.HasOne("CompanyApp.Models.Department", "Department")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -371,6 +371,11 @@ namespace CompanyApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyApp.Models.Department", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

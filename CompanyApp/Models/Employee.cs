@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema; // foreign key attr
 using CompanyApp.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApp.Models
 {
@@ -23,7 +25,10 @@ namespace CompanyApp.Models
 
         // navigation property
         public Department Department { get; set; }
-        //public byte DepartmentID { get; set; } // not required in newer convention !
+
+        //[ForeignKey("DepartmentID")]
+        public int DepartmentID { get; set; } // not required in newer convention !
+        
 
         public Employee()
         {
@@ -36,8 +41,11 @@ namespace CompanyApp.Models
             this.Name = employeeDTO.Name;
             this.Surname = employeeDTO.Surname;
             this.Salary = employeeDTO.Salary;
-            this.Department = new Department(employeeDTO.Department);
             this.IsOnLeave = employeeDTO.IsOnLeave;
+
+            if (employeeDTO.Department != null) this.Department = new Department(employeeDTO.Department);
+
+            this.DepartmentID = employeeDTO.DepartmentID;
         }
     }
 }

@@ -42,15 +42,16 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Employee.Department)
-        @Html.DropDownListFor(m => m.Employee.Department.ID, new SelectList(Model.Departments, "ID", "Name"), "", new {@class="form-control"})
+        @Html.LabelFor(m => m.Employee.DepartmentID)
+        @Html.DropDownListFor(m => m.Employee.DepartmentID, new SelectList(Model.Departments, "ID", "Name"), "", new {@class="form-control"})
+        @Html.ValidationMessageFor(m=>m.Employee.DepartmentID)
         @Html.ValidationMessageFor(m=>m.Employee.Department)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Employee.Salary)
         @Html.TextBoxFor(m => m.Employee.Salary, new {@class="form-control"})
-        @Html.ValidationMessageFor(m=>m.Employee.Department)
+        @Html.ValidationMessageFor(m=>m.Employee.Salary)
     </div>
 
     <div class="form-group">

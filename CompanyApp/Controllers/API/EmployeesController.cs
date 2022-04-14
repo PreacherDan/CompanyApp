@@ -9,7 +9,7 @@ namespace CompanyApp.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : ControllerBase, IDisposable
     {
 
         // PMC> update-Package Microsoft.AspNet.WebApi –reinstall
@@ -22,6 +22,11 @@ namespace CompanyApp.Controllers.API
             this._context = context;
 
 
+        }
+
+        public void Dispose()
+        {
+            this._context.Dispose();
         }
 
         [HttpGet]
@@ -78,7 +83,8 @@ namespace CompanyApp.Controllers.API
             empFromDb.Surname = employee.Surname;
             empFromDb.Name = employee.Name;
             empFromDb.IsOnLeave = employee.IsOnLeave;
-            empFromDb.Department = new Department(employee.Department); // should use ID navigation property, instead of an actual Dept instance
+            //empFromDb.Department = new Department(employee.Department); // should use ID navigation property, instead of an actual Dept instance
+            empFromDb.DepartmentID = employee.DepartmentID; // should use ID navigation property, instead of an actual Dept instance
 
             _context.SaveChanges();
             return Ok();
