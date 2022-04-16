@@ -19,3 +19,6 @@
         <li>Not On Leave</li>
     }
 </ul>
+
+
+@Html.ActionLink("Delete2", "Delete", "Employees", new { id = Model.ID, actionToReturn = "index", controllerToReturn ="Employees" }, new{@class="btn btn-primary"})

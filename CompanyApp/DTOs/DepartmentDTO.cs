@@ -7,7 +7,7 @@ namespace CompanyApp.DTOs
     public class DepartmentDTO
     {
         //[Required(ErrorMessage ="Department ID Required")]
-        public int ID { get; set; }
+        public int ID { get; set; } // set nullable: not initializing with default value and displaying it in form
         public string? Name { get; set; }
         public string? Location { get; set; }
         public int BudgetYearly { get; set; }

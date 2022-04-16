@@ -28,7 +28,7 @@ else
     <table>        
         <tr> 
             <th>Name</th>
-            <th>Department</th> @*HEADERS*@
+            <th>@Html.ActionLink("Department", "IndexDepartments", "Employees")</th> @*HEADERS*@
             <th>Salary</th>
             <th>Options</th>
         </tr>
@@ -42,7 +42,7 @@ else
                 <td>
                     @Html.ActionLink("Details", "Details","Employees", new{ id=emp.ID })
                     @Html.ActionLink("Edit", "Edit", "Employees", new { id = emp.ID })
-                    @Html.ActionLink("Delete", "Delete", "Employees", new { id = emp.ID })                    
+                    @Html.ActionLink("Delete", "Delete", "Employees", new { id = emp.ID, actionToReturn="index",  controllerToReturn="Employees" })
                 </td>
             </tr>
         }

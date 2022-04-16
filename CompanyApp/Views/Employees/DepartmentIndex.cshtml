@@ -1,0 +1,19 @@
+﻿@model IEnumerable<CompanyApp.DTOs.DepartmentDTO>
+@{
+    ViewData["Title"] = "Department Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Department Index</h1>
+
+@Html.ActionLink("Add Department", "CreateDepartment", "Employees", null, new { @class="btn btn-primary" })
+
+<ul>
+    @foreach(var dept in Model)
+    {
+        <li>
+            @Html.ActionLink(dept.Name, "DepartmentDetails", "Employees", new { id = dept.ID })
+        </li>
+    }
+</ul>
+

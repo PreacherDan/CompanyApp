@@ -1,0 +1,44 @@
+﻿@model CompanyApp.DTOs.DepartmentDTO
+
+@{
+    if(Model.ID == 0)
+    {
+        ViewBag.Title = "Add Department";
+        <h2>Add New Department</h2>
+    }
+    else
+    {
+        ViewBag.Title = $"{Model.Name} - Edit Department";        
+        <h2>Edit Department"</h2>
+    }
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("SaveDepartment", "Employees"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Name)
+        @Html.TextBoxFor(m=>m.Name)
+        @Html.ValidationMessageFor(m=>m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m=>m.Location)
+        @Html.TextBoxFor(m=>m.Location)
+        @Html.ValidationMessageFor(m=>m.Location)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m=>m.BudgetYearly)
+        @Html.TextBoxFor(m=>m.BudgetYearly)
+        @Html.ValidationMessageFor(m=>m.BudgetYearly)
+    </div>
+
+    @Html.ValidationSummary();
+    @Html.HiddenFor(m => m.ID);
+    @Html.AntiForgeryToken();
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+

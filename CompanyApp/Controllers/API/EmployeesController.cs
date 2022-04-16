@@ -36,8 +36,8 @@ namespace CompanyApp.Controllers.API
             return Ok(_context.Employees.ToList<Employee>().Select(e => new EmployeeDTO(e))); 
         }
 
-        [HttpGet]
-        [Route("/api/employees/{id}")]
+        [HttpGet("id")]
+        //[Route("/api/employees/{id}")]
         public async Task<IActionResult> GetEmployee(int id)
         {
             var empFromDb = _context.Employees.ToList().SingleOrDefault(e => e.ID == id);
@@ -47,6 +47,7 @@ namespace CompanyApp.Controllers.API
         }
 
         [HttpPost]
+        [Produces("application/json")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             if (!ModelState.IsValid)            
@@ -70,7 +71,10 @@ namespace CompanyApp.Controllers.API
             return Ok(); //Created();
         }
 
+        //[HttpPut("id")]
         [HttpPut]
+        [Route("api/employees/{id}")]
+        //[Produces("application/json")]
         public async Task<IActionResult> EditEmployee(int id, EmployeeDTO employee)
         {
             if (!ModelState.IsValid)
@@ -87,10 +91,11 @@ namespace CompanyApp.Controllers.API
             empFromDb.DepartmentID = employee.DepartmentID; // should use ID navigation property, instead of an actual Dept instance
 
             _context.SaveChanges();
-            return Ok();
+            return Ok(new EmployeeDTO(empFromDb));
         }
 
-        [HttpDelete]
+        [HttpDelete("id")]
+        //[Produces("application/json")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var empFromDb = _context.Employees.SingleOrDefault(e => e.ID == id);

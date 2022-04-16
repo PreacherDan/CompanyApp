@@ -6,20 +6,28 @@
 
 <h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1
 
+@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID })
 
 <ul>
-    Yearly Budget: @Model.Department.BudgetYearly
-    Location: @Model.Department.Location
+    <li>Yearly Budget: @Model.Department.BudgetYearly</li>
+    <li>Location: @Model.Department.Location</li>
 </ul>
 
 <h2>Employees from ViewModel</h2>
 
 <ul>
-    @foreach(var emp in Model.Employees)
+    @if(Model.Employees.Any())
     {
-     <li>
-         @Html.ActionLink($"{emp.Name} {emp.Surname}", "Details", "Employees", new { id = emp.ID })
-     </li>       
+        @foreach(var emp in Model.Employees)
+        {
+         <li>
+             @Html.ActionLink($"{emp.Name} {emp.Surname}", "Details", "Employees", new { id = emp.ID })
+         </li>       
+        }
+    }
+    else
+    {
+        <h1>No Employees in that department!</h1>
     }
 </ul>
 

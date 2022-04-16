@@ -84,8 +84,7 @@ namespace CompanyApp.Controllers
                     empFromDb.IsOnLeave = employee.IsOnLeave;
                 }
 
-                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");
-                
+                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");                
                 _context.SaveChanges();
                 //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
             }
@@ -122,6 +121,17 @@ namespace CompanyApp.Controllers
             return View("EmployeeForm", viewModel);
         }
 
+        public IActionResult Delete(int id, string actionToReturn, string controllerToReturn)
+        {
+            var empFromDb = _context.Employees.SingleOrDefault(e => e.ID == id);
+            if (empFromDb == null) return NotFound();
+
+            _context.Employees.Remove(empFromDb);
+            _context.SaveChanges();
+
+            return RedirectToAction(actionToReturn, controllerToReturn);
+        }
+
         public IActionResult DepartmentDetails(int id)
         {
             var deptFromDb = _context.Departments.Include(d=>d.Employees).SingleOrDefault(d => d.ID == id);
@@ -135,6 +145,45 @@ namespace CompanyApp.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult IndexDepartments()
+        {
+            return View("Departmentindex", _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)));
+                //.ToList<DepartmentDTO>());
+        }
+
+        public IActionResult SaveDepartment(DepartmentDTO department)
+        {
+            if (!ModelState.IsValid)
+                return View("DepartmentForm", department);
+
+            if (department.ID == 0)
+                _context.Departments.Add(new Department(department));
+            else
+            {
+                var deptFromDb = _context.Departments.ToList<Department>().Single(d => d.ID == department.ID);
+
+                deptFromDb.Name = department.Name;
+                deptFromDb.BudgetYearly = department.BudgetYearly;
+                deptFromDb.Location = department.Location;
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("IndexDepartments");
+        }
+
+        public IActionResult CreateDepartment()
+        {
+            return View("DepartmentForm", new DepartmentDTO());
+        }
+
+        public IActionResult EditDepartment(int id)
+        {
+            var deptFromDb = _context.Departments.ToList<Department>().SingleOrDefault(d => d.ID == id);
+            if (deptFromDb == null) return NotFound();
+
+            return View("DepartmentForm", new DepartmentDTO(deptFromDb));
         }
     }
 }
