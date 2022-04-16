@@ -1,8 +1,21 @@
-﻿
+﻿@model CompanyApp.DTOs.EmployeeDTO
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = string.Format("{0} {1} - Details", Model.Name, Model.Surname);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@Model.Name @Model.Surname - Details</h1>
 
+<ul>
+    <li>Department: @Model.Department.Name</li>
+    <li>Salary: @Model.Salary</li>
+    @if(Model.IsOnLeave)
+    {
+        <li>On Leave</li>
+    }
+    else
+    {
+        <li>Not On Leave</li>
+    }
+</ul>

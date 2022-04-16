@@ -1,0 +1,37 @@
+﻿@model CompanyApp.ViewModels.DepartmentDetailsViewModel
+@{
+    ViewData["Title"] = "DepartmentDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1
+
+
+<ul>
+    Yearly Budget: @Model.Department.BudgetYearly
+    Location: @Model.Department.Location
+</ul>
+
+<h2>Employees from ViewModel</h2>
+
+<ul>
+    @foreach(var emp in Model.Employees)
+    {
+     <li>
+         @Html.ActionLink($"{emp.Name} {emp.Surname}", "Details", "Employees", new { id = emp.ID })
+     </li>       
+    }
+</ul>
+
+<h2>TO DO: mployees from Model Relation</h2>
+
+@*requires the ViewModel Department.Employees object to be initialized with EmployeeDTO objects (in DepartmentDTO constructor) *@
+@*DepartmentDetails controller eager loads the Employees (include), who then need to be passed to the DepartmentDTO as EmployeeDTO objects *@
+@*<ul>
+    <li>
+        @foreach (var emp in Model.Department.Employees)
+        {
+            @Html.ActionLink($"{emp.Name} {emp.Surname}", "Details", "Employees", new { id = emp.ID })
+        }
+    </li>
+</ul>*@

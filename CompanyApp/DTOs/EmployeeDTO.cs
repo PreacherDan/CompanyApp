@@ -38,10 +38,12 @@ namespace CompanyApp.DTOs
             this.Name = employee.Name;
             this.Surname = employee.Surname;
             this.Salary = employee.Salary;
-            this.Department = new DepartmentDTO(employee.Department);
             this.IsOnLeave = employee.IsOnLeave;
 
             this.DepartmentID = employee.DepartmentID;
+
+            if (employee.Department != null)
+                this.Department = new DepartmentDTO(employee.Department);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace CompanyApp.Controllers
         [Route("employees/details/{id}")]
         public IActionResult Details(int id)
         {
-            var empFromDb = _context.Employees.SingleOrDefault(e => e.ID == id);
+            var empFromDb = _context.Employees.Include(e => e.Department).SingleOrDefault(e => e.ID == id);
             if (empFromDb == null) return BadRequest();
 
             return View(new EmployeeDTO(empFromDb));
@@ -111,7 +111,7 @@ namespace CompanyApp.Controllers
         public IActionResult Edit(int id)
         {
             var empFromDb = _context.Employees.SingleOrDefault(e => e.ID == id);
-            if(empFromDb == null) return BadRequest();
+            if(empFromDb == null) return NotFound();
 
             var viewModel = new EmployeeFormViewModel()
             {
@@ -119,7 +119,22 @@ namespace CompanyApp.Controllers
                 Departments = _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
             };
 
-            return View("CustomerForm", viewModel);
+            return View("EmployeeForm", viewModel);
+        }
+
+        public IActionResult DepartmentDetails(int id)
+        {
+            var deptFromDb = _context.Departments.Include(d=>d.Employees).SingleOrDefault(d => d.ID == id);
+            //var deptFromDb = _context.Departments.SingleOrDefault(d => d.ID == id);
+            if (deptFromDb == null) return NotFound();
+
+            var viewModel = new DepartmentDetailsViewModel()
+            {
+                Department = new DepartmentDTO(deptFromDb),
+                Employees = _context.Employees.Where(e => e.DepartmentID == id).Select(e => new EmployeeDTO(e))
+            };
+
+            return View(viewModel);
         }
     }
 }
