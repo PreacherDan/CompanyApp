@@ -8,13 +8,18 @@ using System.Text.Json;
 
 namespace CompanyApp.Data
 {
-    public class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository, IDisposable
     {
         private HttpClient _httpClient = null;
 
         public DepartmentRepository(HttpClient httpClient)
         {
             this._httpClient = httpClient;
+        }
+
+        public void Dispose()
+        {
+            this._httpClient.Dispose();
         }
 
         public IEnumerable<DepartmentDTO> GetDepartments()
