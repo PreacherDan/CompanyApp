@@ -6,8 +6,6 @@
 
 <h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1
 
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", null, new { id = Model.Department.ID })
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, null)
 @Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID })
 
 <ul>

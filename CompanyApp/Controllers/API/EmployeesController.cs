@@ -35,7 +35,6 @@ namespace CompanyApp.Controllers.API
         }
 
         [HttpGet("{id}")]
-        //[Route("/api/employees/{id}")]
         public async Task<IActionResult> GetEmployee(int id)
         {
             var empFromDb = _context.Employees.ToList().SingleOrDefault(e => e.ID == id);
@@ -69,10 +68,8 @@ namespace CompanyApp.Controllers.API
             return Ok(); //Created();
         }
 
-        //[HttpPut("id")]
         [HttpPut]
         [Route("api/employees/{id}")]
-        //[Produces("application/json")]
         public async Task<IActionResult> EditEmployee(int id, EmployeeDTO employee)
         {
             if (!ModelState.IsValid)
@@ -93,7 +90,6 @@ namespace CompanyApp.Controllers.API
         }
 
         [HttpDelete("id")]
-        //[Produces("application/json")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var empFromDb = _context.Employees.SingleOrDefault(e => e.ID == id);

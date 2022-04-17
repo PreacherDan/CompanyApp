@@ -27,10 +27,10 @@ namespace CompanyApp.Models
             if (employee == null) return new ValidationResult("Object is not an employee");
 
             department = new Department(departmentRepository.GetDepartment(employee.DepartmentID));
-            department.Employees = employeeRepository.GetEmployees().
-                Where(e => e.DepartmentID == department.ID).
-                ToList<EmployeeDTO>().
-                Select(e => new Employee(e))
+            department.Employees = employeeRepository.GetEmployees()
+                .Where(e => e.DepartmentID == department.ID)
+                .ToList<EmployeeDTO>()
+                .Select(e => new Employee(e))
                 .ToList<Employee>();
 
             //Int32.TryParse(value, out newSalary);
