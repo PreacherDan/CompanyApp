@@ -20,8 +20,6 @@ namespace CompanyApp.Controllers.API
         public EmployeesController(ApplicationDbContext context)
         {
             this._context = context;
-
-
         }
 
         public void Dispose()
@@ -36,7 +34,7 @@ namespace CompanyApp.Controllers.API
             return Ok(_context.Employees.ToList<Employee>().Select(e => new EmployeeDTO(e))); 
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         //[Route("/api/employees/{id}")]
         public async Task<IActionResult> GetEmployee(int id)
         {

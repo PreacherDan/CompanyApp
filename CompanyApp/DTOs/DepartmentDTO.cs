@@ -25,7 +25,7 @@ namespace CompanyApp.DTOs
             this.Name = department.Name;
             this.Location = department.Location;
 
-            if (department.Employees.Any()) { }
+            //if (department.Employees != null) { }
                 //this.Employees = department.Employees.Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>(); //for some reason this line crashes the server 
         }
     }

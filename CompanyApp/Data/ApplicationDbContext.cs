@@ -7,12 +7,15 @@ namespace CompanyApp.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public static DbContextOptions Options { get; private set; }
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+            :   base(options)
         {
+            ApplicationDbContext.Options = options;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

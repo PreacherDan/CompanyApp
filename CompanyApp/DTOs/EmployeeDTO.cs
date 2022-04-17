@@ -14,7 +14,7 @@ namespace CompanyApp.DTOs
         [Required(ErrorMessage = "Employee Surname Required")]
         public string Surname { get; set; }
 
-        //[ConformsWithBudget] // custom validation class
+        [ConformsWithDeptBudget] // custom validation class
         [Required(ErrorMessage = "Employee Salary Required")]
         public int? Salary { get; set; }
 

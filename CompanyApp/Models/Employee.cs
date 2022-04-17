@@ -17,7 +17,7 @@ namespace CompanyApp.Models
         public string Surname { get; set; }
 
         [Required]
-        //[ConformsWithBudget] // custom validation class
+        [ConformsWithDeptBudget] // custom validation class
         public int? Salary { get; set; }
 
         [Display(Name="Is On Leave?")]
