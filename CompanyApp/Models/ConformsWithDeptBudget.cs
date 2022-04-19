@@ -33,8 +33,6 @@ namespace CompanyApp.Models
                 .Select(e => new Employee(e))
                 .ToList<Employee>();
 
-            //Int32.TryParse(value, out newSalary);
-
             var empOldSalary = employeeRepository.GetEmployee(employee.ID).Salary;
             int? currentSalaries = 0;
             var oldDeptID = employeeRepository.GetEmployee(employee.ID).DepartmentID;
@@ -48,11 +46,6 @@ namespace CompanyApp.Models
                 return new ValidationResult($"'{employee.Salary}' salary would exceed yearly '{department.Name}' Department budget ('{department.BudgetYearly}')");
 
             return ValidationResult.Success;
-            //return base.IsValid(value, validationContext);
         }
     }
 }
-
-
-//employee = (validationContext.ObjectInstance is Employee) ? (Employee)value : new Employee((EmployeeDTO)value);
-//department = context.Departments.Include(d => d.Employees).Single(d => d.ID == employee.DepartmentID);

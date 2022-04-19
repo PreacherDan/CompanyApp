@@ -17,7 +17,6 @@ namespace CompanyApp.Controllers
         public EmployeesController(ApplicationDbContext context)
         {
             this._context = context;
-
             //_context.Database.EnsureDeleted();  //delete migrations folder. run app, call ensuredeleted(). add-migration Initial, update-db, call ensurecreated()
             //_context.Database.EnsureCreated();
         }
@@ -40,7 +39,7 @@ namespace CompanyApp.Controllers
         public IActionResult Details(int id)
         {
             var empFromDb = _context.Employees.Include(e => e.Department).SingleOrDefault(e => e.ID == id);
-            if (empFromDb == null) return BadRequest();
+            if (empFromDb == null) return NotFound();
 
             return View(new EmployeeDTO(empFromDb));
         }        
@@ -48,10 +47,6 @@ namespace CompanyApp.Controllers
         [HttpPost]
         public IActionResult Save([FromForm] EmployeeDTO employee)
         {
-            //employee.Department = _context.Departments.ToList<Department>().Single<Department>(d => d.ID == employee.ID);
-            
-            //foreach(var dept in _context.Departments.ToList())
-                //if (dept.ID == employee.Department.ID) employee.Department = new DepartmentDTO(dept);
                     
             if (!ModelState.IsValid)
             {
@@ -66,7 +61,7 @@ namespace CompanyApp.Controllers
                 return View("EmployeeForm", viewModel);
             }
 
-            _context.Database.OpenConnection();
+            _context.Database.OpenConnection(); //not necessary
             try
             {
                 if (employee.ID == 0) // creating new emp
@@ -78,15 +73,10 @@ namespace CompanyApp.Controllers
                     empFromDb.Name = employee.Name;
                     empFromDb.Salary = employee.Salary;
                     empFromDb.Surname = employee.Surname;
-                    //empFromDb.Department = new Department(employee.Department);
-                    //empFromDb.Department.ID = employee.Department.ID;
                     empFromDb.DepartmentID = employee.DepartmentID;
                     empFromDb.IsOnLeave = employee.IsOnLeave;
                 }
-
-                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");                
                 _context.SaveChanges();
-                //_context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
             }
             finally
             {
