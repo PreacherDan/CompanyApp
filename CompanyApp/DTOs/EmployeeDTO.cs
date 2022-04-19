@@ -25,6 +25,7 @@ namespace CompanyApp.DTOs
         public DepartmentDTO? Department { get; set; }
         //public byte DepartmentID { get; set; } // not required in newer convention !
 
+        [Display(Name="Department")]
         public int DepartmentID { get; set; }
 
         public EmployeeDTO()

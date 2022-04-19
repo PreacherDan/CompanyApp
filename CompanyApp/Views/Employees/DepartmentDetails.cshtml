@@ -6,14 +6,20 @@
 
 <h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1
 
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID })
+@* These buttons keep failing to work, each works sometimes! *@
+@Html.ActionLink("Edit Details", "EditDepartment", "Employees", null, new { id = Model.Department.ID })
+@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, null)<br />
+@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, new { @class="btn btn=primary"}) <br /> <br />
 
+<br /> <br />
 <ul>
     <li>Yearly Budget: @Model.Department.BudgetYearly</li>
     <li>Location: @Model.Department.Location</li>
 </ul>
+<br />
 
 <h2>Employees from ViewModel</h2>
+<br />
 
 <ul>
     @if(Model.Employees.Any())
@@ -31,7 +37,7 @@
     }
 </ul>
 
-<h2>TO DO: mployees from Model Relation</h2>
+@*<h2>TO DO: mployees from Model Relation</h2>*@
 
 @*requires the ViewModel Department.Employees object to be initialized with EmployeeDTO objects (in DepartmentDTO constructor) *@
 @*DepartmentDetails controller eager loads the Employees (include), who then need to be passed to the DepartmentDTO as EmployeeDTO objects *@

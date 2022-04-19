@@ -6,7 +6,8 @@
 
 <h1>Department Index</h1>
 
-@Html.ActionLink("Add Department", "CreateDepartment", "Employees", null, new { @class="btn btn-primary" })
+@* These buttons keep failing to work, each works sometimes! *@
+@Html.ActionLink("Add Department", "CreateDepartment", "Employees", null, new { @class="btn btn-primary" }) <br /><br />
 
 <ul>
     @foreach(var dept in Model)
