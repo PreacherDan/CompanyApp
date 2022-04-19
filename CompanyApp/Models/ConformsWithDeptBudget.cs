@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyApp.Models
 {
+    /// <summary>
+    /// This validation attribute confirms the ability to assign an Employee to the selected department by checking whether his salary wouldn't cross
+    /// the department's yearly budget.
+    /// </summary>
     public class ConformsWithDeptBudget : ValidationAttribute
     {
         private EmployeeRepository employeeRepository = null;
@@ -22,10 +26,13 @@ namespace CompanyApp.Models
             Employee employee = null;
             Department department = null;
 
+            // unbox the Employee or EmployeeDTO object from the ValidationContext object
             if (validationContext.ObjectInstance is Employee) employee = (Employee)validationContext.ObjectInstance;
             else if (validationContext.ObjectInstance is EmployeeDTO) employee = new Employee((EmployeeDTO)validationContext.ObjectInstance);
             if (employee == null) return new ValidationResult("Object is not an employee");
 
+
+            // Extract the department object from the DB, along with all it's Employees
             department = new Department(departmentRepository.GetDepartment(employee.DepartmentID));
             department.Employees = employeeRepository.GetEmployees()
                 .Where(e => e.DepartmentID == department.ID)
@@ -35,7 +42,7 @@ namespace CompanyApp.Models
 
             int? currentSalaries = 0;
 
-            //Adding a new employee
+            //Adding a new employee (check if the yearly budget is exceeded)
             if (employee.ID == 0)
             {
                 currentSalaries = department.Employees.Sum(e => e.Salary);
@@ -45,7 +52,7 @@ namespace CompanyApp.Models
                 return ValidationResult.Success;
             }
 
-            //Editing an old employee
+            //Editing an old employee (check if the yearly budget is exceeded)
             var empOldSalary = employeeRepository.GetEmployee(employee.ID).Salary;
             var oldDeptID = employeeRepository.GetEmployee(employee.ID).DepartmentID;
 
