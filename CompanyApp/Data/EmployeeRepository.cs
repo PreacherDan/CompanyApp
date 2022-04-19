@@ -22,13 +22,13 @@ namespace CompanyApp.Data
             _httpClient.Dispose();
         }
 
-        public IEnumerable<EmployeeDTO> GetEmployees()
+        public IEnumerable<EmployeeDTO>? GetEmployees()
         {
             var empsFromDb = _httpClient.GetFromJsonAsync<List<Employee>>(@"api/employees/");
             return empsFromDb.Result.Select(e => new EmployeeDTO(e));
         }
 
-        public EmployeeDTO GetEmployee(int id)
+        public EmployeeDTO? GetEmployee(int id)
         {
             var empFromDb = _httpClient.GetFromJsonAsync<EmployeeDTO>($"api/employees/{id}");
             return empFromDb.Result;

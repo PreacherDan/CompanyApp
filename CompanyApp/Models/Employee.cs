@@ -8,8 +8,7 @@ namespace CompanyApp.Models
     public class Employee
     {
         [Required]
-        public int ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
-
+        public int ID { get; set; } 
         [Required]
         public string Name { get; set; }
         
@@ -18,7 +17,7 @@ namespace CompanyApp.Models
 
         [Required]
         [ConformsWithDeptBudget] // custom validation class
-        public int? Salary { get; set; }
+        public int? Salary { get; set; } // nullable so salary doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
 
         [Display(Name="Is On Leave?")]
         public bool IsOnLeave { get; set; }

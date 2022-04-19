@@ -10,7 +10,7 @@ namespace CompanyApp.Models
         public int ID { get; set; }
         public string? Name { get; set; }
         public string? Location { get; set; }
-        public int BudgetYearly { get; set; }
+        public int? BudgetYearly { get; set; }
         public ICollection<Employee> Employees { get; set; }
         //public Employee Manager { get; set; }
 

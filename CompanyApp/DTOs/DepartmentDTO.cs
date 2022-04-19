@@ -10,7 +10,7 @@ namespace CompanyApp.DTOs
         public int ID { get; set; } // set nullable: not initializing with default value and displaying it in form
         public string? Name { get; set; }
         public string? Location { get; set; }
-        public int BudgetYearly { get; set; }
+        public int? BudgetYearly { get; set; }
         public ICollection<EmployeeDTO> Employees { get; set; }
 
         public DepartmentDTO()

@@ -33,8 +33,20 @@ namespace CompanyApp.Models
                 .Select(e => new Employee(e))
                 .ToList<Employee>();
 
-            var empOldSalary = employeeRepository.GetEmployee(employee.ID).Salary;
             int? currentSalaries = 0;
+
+            //Adding a new employee
+            if (employee.ID == 0)
+            {
+                currentSalaries = department.Employees.Sum(e => e.Salary);
+                if ((currentSalaries * 12) + (Convert.ToInt32(value) * 12) > department.BudgetYearly)
+                    return new ValidationResult($"'{employee.Salary}' salary would exceed yearly '{department.Name}' Department budget ('{department.BudgetYearly}')");
+            
+                return ValidationResult.Success;
+            }
+
+            //Editing an old employee
+            var empOldSalary = employeeRepository.GetEmployee(employee.ID).Salary;
             var oldDeptID = employeeRepository.GetEmployee(employee.ID).DepartmentID;
 
             if (oldDeptID == employee.DepartmentID)
