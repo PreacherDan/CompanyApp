@@ -36,7 +36,8 @@ namespace CompanyApp.Data
 
         public EmployeeDTO CreateEmployee(EmployeeDTO employee)
         {
-            throw new NotImplementedException();
+            var result = _httpClient.PostAsJsonAsync<EmployeeDTO>($"api/employees", employee);
+            return result.Result;
         }
 
         public void DeleteEmployee(int id)
