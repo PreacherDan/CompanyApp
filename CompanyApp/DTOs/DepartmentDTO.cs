@@ -11,10 +11,7 @@ namespace CompanyApp.DTOs
         public string? Name { get; set; }
         public string? Location { get; set; }
         public int? BudgetYearly { get; set; }
-        
         public ICollection<EmployeeDTO> Employees { get; set; }
-        public int EmployeeCount { get; private set; }
-
 
         public DepartmentDTO()
         {
@@ -28,8 +25,17 @@ namespace CompanyApp.DTOs
             this.Name = department.Name;
             this.Location = department.Location;
 
-            if (department.Employees != null) this.EmployeeCount = department.Employees.Count;
-            else this.EmployeeCount = 0;
+           // this.Employees = mapEmployees(department.Employees).ToList();
+
+            //if (department.Employees != null) { }
+                //this.Employees = department.Employees.Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>(); //this line crashes the server 
         }
+
+        //private IEnumerable<EmployeeDTO> mapEmployees(ICollection<Employee> employees)
+        //{
+
+        //    foreach (var emp in employees.ToList())
+        //        yield return new EmployeeDTO(emp);
+        //}
     }
 }

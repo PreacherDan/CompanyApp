@@ -11,7 +11,6 @@ namespace CompanyApp.Models
         public string? Name { get; set; }
         public string? Location { get; set; }
         public int? BudgetYearly { get; set; }
-
         public ICollection<Employee> Employees { get; set; }
 
         public Department()
@@ -25,8 +24,9 @@ namespace CompanyApp.Models
             this.BudgetYearly = departmentDTO.BudgetYearly;
             this.Name = departmentDTO.Name;
             this.Location = departmentDTO.Location;
-            //if(departmentDTO.Employees!=null && departmentDTO.Employees.Any())
-                //this.Employees = departmentDTO.Employees.Select(e => new Employee(e));
+
+            if(departmentDTO.Employees!=null && departmentDTO.Employees.Any())
+                this.Employees = departmentDTO.Employees.Select(e => new Employee(e)).ToList<Employee>();
         }
     }
 }

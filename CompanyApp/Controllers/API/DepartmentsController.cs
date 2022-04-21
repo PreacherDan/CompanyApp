@@ -30,7 +30,7 @@ namespace CompanyApp.Controllers.API
             var deptFromDb = _context.Departments.Include(d =>d.Employees).SingleOrDefault(d => d.ID == id);
             if (deptFromDb == null) return NotFound();
 
-            return Ok(new DepartmentDTO(deptFromDb)); //{ Employees = _context.Employees.ToList<Employee>().Select(e => new EmployeeDTO()) });
+            return Ok(new DepartmentDTO(deptFromDb));
         }
     }
 }

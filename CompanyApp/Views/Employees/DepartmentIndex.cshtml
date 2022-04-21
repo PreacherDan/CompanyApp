@@ -36,15 +36,12 @@
         {
              <tr>
                 <td>@emp.Name</td>
-                <td>@emp.EmployeeCount</td>
-                    @*@if(emp.Employees==null) { <td>-</td> }
-                    else { <td>@emp.EmployeeCount</td> }*@
-                    @*else { <td>@emp.Employees.ToList().Count</td> }*@
+                    @if(emp.Employees==null) { <td>-</td> }
+                    else { <td>@emp.Employees.ToList().Count</td> }
                 <td>@emp.Location</td>
                 <td>@emp.BudgetYearly</td>
                 <td>
                     @Html.ActionLink("Details", "DepartmentDetails", "Employees", new { id=emp.ID }, null)
-                    @Html.ActionLink("Edit", "EditDepartment", "Employees", new { id=emp.ID }, null)
                 </td>
             </tr>
         }
