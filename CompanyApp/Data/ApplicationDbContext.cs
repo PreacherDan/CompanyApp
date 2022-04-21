@@ -28,6 +28,12 @@ namespace CompanyApp.Data
                 new Department() { ID = 3, Name = "Management", BudgetYearly = 80000, Location = "Cracow" },
                 new Department() { ID = 4, Name = "Finance", BudgetYearly = 500000, Location = "Warsaw" }
                 );
+
+            builder.Entity<Employee>().HasData(
+                new Employee() { ID = 1, DepartmentID = 1, Salary = 5000, IsOnLeave = false, Name = "Jan", Surname = "Kowalski" },
+                new Employee() { ID = 2, DepartmentID = 4, Salary = 6000, IsOnLeave = false, Name = "Piotr", Surname = "Nowak" },
+                new Employee() { ID = 3, DepartmentID = 1, Salary = 3000, IsOnLeave = false, Name = "Forrest", Surname = "Gump" }
+                );
         }
 
         public override void Dispose()
