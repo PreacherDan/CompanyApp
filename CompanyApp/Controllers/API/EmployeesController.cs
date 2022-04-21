@@ -44,7 +44,6 @@ namespace CompanyApp.Controllers.API
         }
 
         [HttpPost]
-        [Produces("application/json")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             if (!ModelState.IsValid)
