@@ -47,24 +47,13 @@ namespace CompanyApp.Controllers.API
         [Produces("application/json")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
-            if (!ModelState.IsValid)            
+            if (!ModelState.IsValid)
                 return BadRequest();
 
-            _context.Database.OpenConnection();
-            try
-            {
-                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments ON;");
-                employee.ID = 0;
-                _context.Employees.Add(new Employee(employee));
+            employee.ID = 0;
+            _context.Employees.Add(new Employee(employee));
 
-                //_context.Database.ExecuteSqlRaw();
-                _context.SaveChanges();
-                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Departments OFF;");
-            }
-            finally
-            {
-                _context.Database.CloseConnection();
-            }
+            _context.SaveChanges();
             return Ok(); //Created();
         }
 
