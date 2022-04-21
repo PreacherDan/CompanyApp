@@ -130,7 +130,7 @@ namespace CompanyApp.Controllers
         public IActionResult IndexDepartments()
         {
             var tempDepts = _context.Departments
-              //  .Include(d => d.Employees)
+                .Include(d => d.Employees)
                 .ToList<Department>()
                 .Select(d => new DepartmentDTO(d));
 
