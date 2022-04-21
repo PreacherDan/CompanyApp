@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CompanyApp.DTOs.DepartmentDTO>
+﻿@inject CompanyApp.Data.IEmployeeRepository employeeRepository
+@model IEnumerable<CompanyApp.DTOs.DepartmentDTO>
 @{
     ViewData["Title"] = "Department Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,12 +10,42 @@
 @* These buttons keep failing to work, each works sometimes! *@
 @Html.ActionLink("Add Department", "CreateDepartment", "Employees", null, new { @class="btn btn-primary" }) <br /><br />
 
-<ul>
-    @foreach(var dept in Model)
+
+@*@foreach(var emp in employeeRepository.GetEmployees())
+{
+    <p>@emp.Name</p>
+}*@
+
+    @if (!Model.ToList<CompanyApp.DTOs.DepartmentDTO>().Any())
     {
-        <li>
-            @Html.ActionLink(dept.Name, "DepartmentDetails", "Employees", new { id = dept.ID })
-        </li>
+       <h1>No departments registered!</h1> 
     }
-</ul>
+    else
+    {
+            
+             <table class="table">        
+        <tr> 
+            <th scope="col">Name</th>
+            <th scope="col">Employees #</th> @*HEADERS*@
+            <th scope="col">Location</th>
+            <th scope="col">Yearly Budget</th>
+            <th scope="col">Options</th>
+        </tr>
+
+        @foreach(CompanyApp.DTOs.DepartmentDTO emp in Model)
+        {
+             <tr>
+                <td>@emp.Name</td>
+                    @if(emp.Employees==null) { <td>-</td> }
+                    else { <td>@emp.Employees.ToList().Count</td> }
+                <td>@emp.Location</td>
+                <td>@emp.BudgetYearly</td>
+                <td>
+                    @Html.ActionLink("Details", "DepartmentDetails", "Employees", new { id=emp.ID }, null)
+                </td>
+            </tr>
+        }
+    </table>
+        
+    }
 

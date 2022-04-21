@@ -129,7 +129,12 @@ namespace CompanyApp.Controllers
 
         public IActionResult IndexDepartments()
         {
-            return View("Departmentindex", _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)));
+            var tempDepts = _context.Departments
+              //  .Include(d => d.Employees)
+                .ToList<Department>()
+                .Select(d => new DepartmentDTO(d));
+
+            return View("departmentIndex", tempDepts);
         }
 
         public IActionResult SaveDepartment(DepartmentDTO department)
