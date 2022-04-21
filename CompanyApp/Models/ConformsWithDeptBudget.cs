@@ -17,7 +17,8 @@ namespace CompanyApp.Models
 
         public ConformsWithDeptBudget()
         {
-            employeeRepository = new EmployeeRepository(new HttpClient() { BaseAddress = new Uri(@"https://localhost:7235")});
+            // enter actual endpoint Uri after deployment!!
+            employeeRepository = new EmployeeRepository(new HttpClient() { BaseAddress = new Uri(@"https://localhost:7235") });
             departmentRepository = new DepartmentRepository(new HttpClient() { BaseAddress= new Uri(@"https://localhost:7235") });
         }
 
@@ -31,14 +32,20 @@ namespace CompanyApp.Models
             else if (validationContext.ObjectInstance is EmployeeDTO) employee = new Employee((EmployeeDTO)validationContext.ObjectInstance);
             if (employee == null) return new ValidationResult("Object is not an employee");
 
-
-            // Extract the department object from the DB, along with all it's Employees
-            department = new Department(departmentRepository.GetDepartment(employee.DepartmentID));
-            department.Employees = employeeRepository.GetEmployees()
-                .Where(e => e.DepartmentID == department.ID)
-                .ToList<EmployeeDTO>()
-                .Select(e => new Employee(e))
-                .ToList<Employee>();
+            try
+            {
+                // Extract the department object from the DB, along with all it's Employees
+                department = new Department(departmentRepository.GetDepartment(employee.DepartmentID));
+                department.Employees = employeeRepository.GetEmployees()
+                    .Where(e => e.DepartmentID == department.ID)
+                    .ToList<EmployeeDTO>()
+                    .Select(e => new Employee(e))
+                    .ToList<Employee>();
+            }
+            catch (System.AggregateException ex)
+            {
+                // handle wrong httpClient endpoint Uri
+            }
 
             int? currentSalaries = 0;
 
