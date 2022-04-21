@@ -1,22 +1,18 @@
 ﻿@model CompanyApp.ViewModels.DepartmentDetailsViewModel
 @{
-    ViewData["Title"] = "DepartmentDetails";
+    ViewData["Title"] = $"{Model.Department.Name} - Department Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1
+<h1>@string.Format("{0} - Department Details", Model.Department.Name)</h1><br />
 
-@* These buttons keep failing to work, each works sometimes! *@
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", null, new { id = Model.Department.ID })
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, null)<br />
-@Html.ActionLink("Edit Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, new { @class="btn btn=primary"}) <br /> <br />
-
-<br /> <br />
 <ul>
     <li>Yearly Budget: @Model.Department.BudgetYearly</li>
     <li>Location: @Model.Department.Location</li>
 </ul>
 <br />
+
+@Html.ActionLink("Edit Department Details", "EditDepartment", "Employees", new { id = Model.Department.ID }, null)<br /><br />
 
 <h2>Employees from ViewModel</h2>
 <br />
@@ -33,7 +29,7 @@
     }
     else
     {
-        <h1>No Employees in that department!</h1>
+        <h3>No Employees in that department!</h3>
     }
 </ul>
 

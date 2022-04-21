@@ -45,6 +45,7 @@ namespace CompanyApp.Models
             catch (System.AggregateException ex)
             {
                 // handle wrong httpClient endpoint Uri
+                return new ValidationResult($"Wrong endpoint URI: {ex.Message}");
             }
 
             int? currentSalaries = 0;
