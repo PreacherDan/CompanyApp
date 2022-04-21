@@ -6,7 +6,7 @@ namespace CompanyApp.Data
     {
         public IEnumerable<EmployeeDTO> GetEmployees();
         public EmployeeDTO GetEmployee(int id);
-        public EmployeeDTO CreateEmployee(EmployeeDTO employee);
+        public void CreateEmployee(EmployeeDTO employee);
         public EmployeeDTO UpdateEmployee(int id, EmployeeDTO employee);
         public void DeleteEmployee (int id);
     }

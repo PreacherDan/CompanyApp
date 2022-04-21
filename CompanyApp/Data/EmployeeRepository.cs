@@ -34,10 +34,10 @@ namespace CompanyApp.Data
             return empFromDb.Result;
         }
 
-        public EmployeeDTO CreateEmployee(EmployeeDTO employee)
+        public void CreateEmployee(EmployeeDTO employee)
         {
             var result = _httpClient.PostAsJsonAsync<EmployeeDTO>($"api/employees", employee);
-            return result.Result;
+            //return result.Result.Content;
         }
 
         public void DeleteEmployee(int id)
