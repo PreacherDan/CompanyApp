@@ -17,6 +17,7 @@ namespace CompanyApp.Models
 
         public ConformsWithDeptBudget()
         {
+            // ---- TEMPORARY ----
             // enter actual endpoint Uri after deployment!!
             employeeRepository = new EmployeeRepository(new HttpClient() { BaseAddress = new Uri(@"https://localhost:7235") });
             departmentRepository = new DepartmentRepository(new HttpClient() { BaseAddress= new Uri(@"https://localhost:7235") });
