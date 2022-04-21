@@ -61,9 +61,6 @@ namespace CompanyApp.Controllers
                 return View("EmployeeForm", viewModel);
             }
 
-            _context.Database.OpenConnection(); //not necessary
-            try
-            {
                 if (employee.ID == 0) // creating new emp
                     _context.Employees.Add(new Employee(employee));
                 else // editing emp (todo-automapper)
@@ -77,11 +74,6 @@ namespace CompanyApp.Controllers
                     empFromDb.IsOnLeave = employee.IsOnLeave;
                 }
                 _context.SaveChanges();
-            }
-            finally
-            {
-                _context.Database.CloseConnection();
-            }
 
             return RedirectToAction("Index", "Employees");
         }
