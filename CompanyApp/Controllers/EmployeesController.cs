@@ -27,7 +27,7 @@ namespace CompanyApp.Controllers
             base.Dispose(disposing);
         }
 
-        [Route("employees/all")]
+        [Route("employees/")]
         public IActionResult Index()
         {
             var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>();
@@ -113,6 +113,7 @@ namespace CompanyApp.Controllers
             return RedirectToAction(actionToReturn, controllerToReturn);
         }
 
+        [Route("departments/details/{id}")]
         public IActionResult DepartmentDetails(int id)
         {
             var deptFromDb = _context.Departments.Include(d=>d.Employees).SingleOrDefault(d => d.ID == id);
@@ -127,6 +128,7 @@ namespace CompanyApp.Controllers
             return View(viewModel);
         }
 
+        [Route("departments/")]
         public IActionResult IndexDepartments()
         {
             var tempDepts = _context.Departments
@@ -137,6 +139,7 @@ namespace CompanyApp.Controllers
             return View("departmentIndex", tempDepts);
         }
 
+        [Route("department/save")]
         public IActionResult SaveDepartment(DepartmentDTO department)
         {
             if (!ModelState.IsValid)
@@ -157,11 +160,13 @@ namespace CompanyApp.Controllers
             return RedirectToAction("IndexDepartments");
         }
 
+        [Route("department/new")]
         public IActionResult CreateDepartment()
         {
             return View("DepartmentForm", new DepartmentDTO());
         }
 
+        [Route("department/edit")]
         public IActionResult EditDepartment(int id)
         {
             var deptFromDb = _context.Departments.ToList<Department>().SingleOrDefault(d => d.ID == id);

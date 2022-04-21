@@ -14,7 +14,7 @@ namespace CompanyApp.DTOs
         
         public ICollection<EmployeeDTO> Employees { get; set; }
         public int EmployeeCount { get; private set; }
-
+        public int? SpendingYearly { get; private set; }
 
         public DepartmentDTO()
         {
@@ -28,7 +28,11 @@ namespace CompanyApp.DTOs
             this.Name = department.Name;
             this.Location = department.Location;
 
-            if (department.Employees != null) this.EmployeeCount = department.Employees.Count;
+            if (department.Employees != null)
+            {
+                this.EmployeeCount = department.Employees.Count;
+                this.SpendingYearly = department.Employees.Sum(e => e.Salary * 12);
+            }
             else this.EmployeeCount = 0;
         }
     }
