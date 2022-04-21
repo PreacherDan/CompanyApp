@@ -6,7 +6,7 @@ namespace CompanyApp.DTOs
     public class EmployeeDTO
     {
         [Required(ErrorMessage ="Employee ID Required")]
-        public int ID { get; set; } // nullable so ID doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
+        public int ID { get; set; }
 
         [Required(ErrorMessage ="Employee Name Required")]
         public string Name { get; set; }
@@ -14,6 +14,7 @@ namespace CompanyApp.DTOs
         [Required(ErrorMessage = "Employee Surname Required")]
         public string Surname { get; set; }
 
+        // nullable so Salary doesnt get automatically initialized with default value
         [ConformsWithDeptBudget] // custom validation class
         [Required(ErrorMessage = "Employee Salary Required")]
         public int? Salary { get; set; }
@@ -23,7 +24,6 @@ namespace CompanyApp.DTOs
 
         // navigation property
         public DepartmentDTO? Department { get; set; }
-        //public byte DepartmentID { get; set; } // not required in newer convention !
 
         [Display(Name="Department")]
         public int DepartmentID { get; set; }

@@ -15,9 +15,10 @@ namespace CompanyApp.Models
         [Required]
         public string Surname { get; set; }
 
+        // nullable so salary doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
         [Required]
         [ConformsWithDeptBudget] // custom validation class
-        public int? Salary { get; set; } // nullable so salary doesnt get automatically initialized with default value (0 or read as empty string my ModelState.IsValid checker)
+        public int? Salary { get; set; }
 
         [Display(Name="Is On Leave?")]
         public bool IsOnLeave { get; set; }
@@ -25,7 +26,6 @@ namespace CompanyApp.Models
         // navigation property
         public Department Department { get; set; }
 
-        //[ForeignKey("DepartmentID")]
         public int DepartmentID { get; set; } // not required in newer convention !
         
 

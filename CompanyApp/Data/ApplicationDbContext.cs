@@ -30,13 +30,9 @@ namespace CompanyApp.Data
                 );
         }
 
-        //public override void Dispose()
-        //{   
-        //    //Database.ExecuteSqlRaw("SET IDENTITY_INSERT Departments OFF;");
-        //    base.Dispose();
-        //}
-
-        //Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Employee> entityEntry = null;
-        //entityEntry = _context.Employees.Add(new Employee(employee));
+        public override void Dispose()
+        {   
+            base.Dispose();
+        }
     }
 }

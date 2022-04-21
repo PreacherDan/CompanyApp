@@ -12,7 +12,6 @@ namespace CompanyApp.Models
         public string? Location { get; set; }
         public int? BudgetYearly { get; set; }
         public ICollection<Employee> Employees { get; set; }
-        //public Employee Manager { get; set; }
 
         public Department()
         {

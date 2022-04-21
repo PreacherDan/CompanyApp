@@ -32,7 +32,6 @@ namespace CompanyApp.Controllers
         {
             var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>();
             return View(empsWithDepts);
-            //return new ViewResult();
         }
 
         [Route("employees/details/{id}")]
@@ -117,7 +116,6 @@ namespace CompanyApp.Controllers
         public IActionResult DepartmentDetails(int id)
         {
             var deptFromDb = _context.Departments.Include(d=>d.Employees).SingleOrDefault(d => d.ID == id);
-            //var deptFromDb = _context.Departments.SingleOrDefault(d => d.ID == id);
             if (deptFromDb == null) return NotFound();
 
             var viewModel = new DepartmentDetailsViewModel()
@@ -132,7 +130,6 @@ namespace CompanyApp.Controllers
         public IActionResult IndexDepartments()
         {
             return View("Departmentindex", _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)));
-                //.ToList<DepartmentDTO>());
         }
 
         public IActionResult SaveDepartment(DepartmentDTO department)
