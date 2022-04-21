@@ -25,19 +25,19 @@ else
 
 @if(Model.Any())
 {
-    <table>        
+    <table class="table">        
         <tr> 
-            <th>Name</th>
-            <th>@Html.ActionLink("Department", "IndexDepartments", "Employees")</th> @*HEADERS*@
-            <th>Salary</th>
-            <th>Options</th>
+            <th scope="col">Name</th>
+            <th scope="col">@Html.ActionLink("Department", "IndexDepartments", "Employees")</th> @*HEADERS*@
+            <th scope="col">Salary</th>
+            <th scope="col">Options</th>
         </tr>
 
         @foreach(CompanyApp.DTOs.EmployeeDTO emp in Model)
         {
              <tr>
                 <td>@String.Format("{0} {1}", emp.Name, emp.Surname)</td>
-                <td> @Html.ActionLink($"{emp.Department.Name}", "DepartmentDetails", "Employees", new { id = emp.DepartmentID })</td>
+                <td>@Html.ActionLink($"{emp.Department.Name}", "DepartmentDetails", "Employees", new { id = emp.DepartmentID })</td>
                 <td>@emp.Salary</td>
                 <td>
                     @Html.ActionLink("Details", "Details","Employees", new{ id=emp.ID })
