@@ -20,6 +20,7 @@ namespace CompanyApp.Controllers
             _context = context;
         }
 
+        [ResponseCache(Duration = 20)]
         public IActionResult Index()
         {
             return View();
