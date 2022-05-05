@@ -34,6 +34,10 @@ namespace CompanyApp.Data
                 new Employee() { ID = 2, DepartmentID = 4, Salary = 6000, IsOnLeave = false, Name = "Piotr", Surname = "Nowak" },
                 new Employee() { ID = 3, DepartmentID = 1, Salary = 3000, IsOnLeave = false, Name = "Forrest", Surname = "Gump" }
                 );
+
+            //builder.Entity<Department>()
+            //    .Property(d => d.Name)
+            //    .IsRequired();
         }
 
         public override void Dispose()

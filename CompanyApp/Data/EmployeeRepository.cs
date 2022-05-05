@@ -42,7 +42,7 @@ namespace CompanyApp.Data
         public void DeleteEmployee(int id)
         {
             throw new NotImplementedException();
-        }        
+        }
 
         public EmployeeDTO UpdateEmployee(int id, EmployeeDTO employee)
         {

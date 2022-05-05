@@ -30,6 +30,8 @@ namespace CompanyApp.Controllers
         [Route("employees/")]
         public IActionResult Index()
         {
+            //var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>()
+                //.OrderBy(e => e.DepartmentID).ToList<EmployeeDTO>();
             var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>();
             return View(empsWithDepts);
         }
@@ -98,7 +100,7 @@ namespace CompanyApp.Controllers
                 Employee = new EmployeeDTO(empFromDb),
                 Departments = _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
             };
-
+            
             return View("EmployeeForm", viewModel);
         }
 
