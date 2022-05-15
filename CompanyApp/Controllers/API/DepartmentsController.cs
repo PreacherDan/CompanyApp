@@ -21,9 +21,10 @@ namespace CompanyApp.Controllers.API
         [HttpGet]
         public IActionResult GetDepartments()
         {
-            return Ok(_context.Departments.Include(d => d.Employees).ToList<Department>().Select(d => new DepartmentDTO(d)));
+
+            return Ok(_context.Departments.Include(d => d.Employees).Select(d => new DepartmentDTO(d)));
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult GetDepartment(int id)
         {

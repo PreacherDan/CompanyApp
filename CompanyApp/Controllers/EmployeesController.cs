@@ -81,7 +81,7 @@ namespace CompanyApp.Controllers
             var viewModel = new EmployeeFormViewModel()
             {
                 Employee = new DTOs.EmployeeDTO(),
-                Departments = _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
+                Departments = _context.Departments.Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
             };
 
             return View("EmployeeForm", viewModel);
@@ -95,7 +95,7 @@ namespace CompanyApp.Controllers
             var viewModel = new EmployeeFormViewModel()
             {
                 Employee = new EmployeeDTO(empFromDb),
-                Departments = _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
+                Departments = _context.Departments.Select(d => new DepartmentDTO(d)).ToList<DepartmentDTO>()
             };
             
             return View("EmployeeForm", viewModel);
@@ -148,7 +148,7 @@ namespace CompanyApp.Controllers
                 _context.Departments.Add(new Department(department));
             else
             {
-                var deptFromDb = _context.Departments.ToList<Department>().Single(d => d.ID == department.ID);
+                var deptFromDb = _context.Departments.Single(d => d.ID == department.ID);
 
                 deptFromDb.Name = department.Name;
                 deptFromDb.BudgetYearly = department.BudgetYearly;
@@ -168,7 +168,7 @@ namespace CompanyApp.Controllers
         [Route("department/edit")]
         public IActionResult EditDepartment(int id)
         {
-            var deptFromDb = _context.Departments.ToList<Department>().SingleOrDefault(d => d.ID == id);
+            var deptFromDb = _context.Departments.SingleOrDefault(d => d.ID == id);
             if (deptFromDb == null) return NotFound();
 
             return View("DepartmentForm", new DepartmentDTO(deptFromDb));
