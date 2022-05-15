@@ -28,54 +28,51 @@ namespace CompanyApp.Controllers
         }
 
         [Route("employees/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>()
-                //.OrderBy(e => e.DepartmentID).ToList<EmployeeDTO>();
-            var empsWithDepts = _context.Employees.Include(e => e.Department).ToList<Employee>().Select(e => new EmployeeDTO(e)).ToList<EmployeeDTO>();
+            var empsWithDepts = await _context.Employees.Include(e => e.Department).Select(e => new EmployeeDTO(e)).ToListAsync<EmployeeDTO>();
             return View(empsWithDepts);
         }
 
         [Route("employees/details/{id}")]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var empFromDb = _context.Employees.Include(e => e.Department).SingleOrDefault(e => e.ID == id);
+            var empFromDb = await _context.Employees.Include(e => e.Department).SingleOrDefaultAsync(e => e.ID == id);
             if (empFromDb == null) return NotFound();
 
             return View(new EmployeeDTO(empFromDb));
-        }        
+        }
 
         [HttpPost]
-        public IActionResult Save([FromForm] EmployeeDTO employee)
+        public async Task<IActionResult> Save([FromForm] EmployeeDTO employee)
         {
-                    
             if (!ModelState.IsValid)
             {
                 var depts = _context.Departments.ToList();
                 var viewModel = new EmployeeFormViewModel()
                 {
                     Employee = employee,
-                    Departments = _context.Departments.ToList().Select(d => new DepartmentDTO(d)).ToList()
+                    Departments = await _context.Departments.Select(d => new DepartmentDTO(d)).ToListAsync()
                 };
 
                 Console.WriteLine($"Validation falied for {employee.Name} {employee.Surname}!");
                 return View("EmployeeForm", viewModel);
             }
 
-                if (employee.ID == 0) // creating new emp
-                    _context.Employees.Add(new Employee(employee));
-                else // editing emp (todo-automapper)
-                {
-                    var empFromDb = _context.Employees.Single(e => e.ID == employee.ID);
+            if (employee.ID == 0) // creating new emp
+                await _context.Employees.AddAsync(new Employee(employee));
+            else // editing emp (todo-automapper)
+            {
+                var empFromDb = _context.Employees.Single(e => e.ID == employee.ID);
 
-                    empFromDb.Name = employee.Name;
-                    empFromDb.Salary = employee.Salary;
-                    empFromDb.Surname = employee.Surname;
-                    empFromDb.DepartmentID = employee.DepartmentID;
-                    empFromDb.IsOnLeave = employee.IsOnLeave;
-                }
-                _context.SaveChanges();
+                empFromDb.Name = employee.Name;
+                empFromDb.Salary = employee.Salary;
+                empFromDb.Surname = employee.Surname;
+                empFromDb.DepartmentID = employee.DepartmentID;
+                empFromDb.IsOnLeave = employee.IsOnLeave;
+            }
 
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Employees");
         }
 
@@ -117,7 +114,7 @@ namespace CompanyApp.Controllers
 
         [Route("departments/details/{id}")]
         public IActionResult DepartmentDetails(int id)
-        {
+        {            
             var deptFromDb = _context.Departments.Include(d=>d.Employees).SingleOrDefault(d => d.ID == id);
             if (deptFromDb == null) return NotFound();
 
