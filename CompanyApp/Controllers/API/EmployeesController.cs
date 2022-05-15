@@ -86,12 +86,3 @@ namespace CompanyApp.Controllers.API
         }
     }
 }
-/*
-                 var viewmodel = new CompanyApp.ViewModels.EmployeeFormViewModel
-                {
-                    Departments = _context.Departments.ToList<Department>().Select(d => new DepartmentDTO(d)).ToList(),
-                    Employee = new EmployeeDTO(new Employee(employee))
-                };
-// PMC> update-Package Microsoft.AspNet.WebApi –reinstall
-        //install-Package Microsoft.AspNet.WebApi
-            }*/
