@@ -39,20 +39,20 @@
             <th scope="col">Options</th>
         </tr>
 
-        @foreach(CompanyApp.DTOs.DepartmentDTO emp in Model)
+        @foreach(CompanyApp.DTOs.DepartmentDTO dept in Model)
         {
              <tr>
-                <td>@emp.Name</td>
-                <td>@emp.EmployeeCount</td>
+                <td>@dept.Name</td>
+                <td>@dept.EmployeeCount</td>
                     @*@if(emp.Employees==null) { <td>-</td> }
                     else { <td>@emp.EmployeeCount</td> }*@
                     @*else { <td>@emp.Employees.ToList().Count</td> }*@
-                <td>@emp.Location</td>
-                <td>@emp.BudgetYearly</td>
-                <td>@emp.SpendingYearly</td>
+                <td>@dept.Location</td>
+                <td>@dept.BudgetYearly</td>
+                <td>@dept.SpendingYearly</td>
                 <td>
-                    @Html.ActionLink("Details", "DepartmentDetails", "Employees", new { id=emp.ID }, null)
-                    @Html.ActionLink("Edit", "EditDepartment", "Employees", new { id=emp.ID }, null)
+                    @Html.ActionLink("Details", "DepartmentDetails", "Employees", new { id=dept.ID }, null)
+                    @Html.ActionLink("Edit", "EditDepartment", "Employees", new { id=dept.ID }, null)
                 </td>
             </tr>
         }

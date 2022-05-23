@@ -14,7 +14,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("Client", client =>
+{
+    client.BaseAddress = new Uri(@"https://localhost:7235");
+});
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
@@ -44,5 +47,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Middleware running before processing request");
+    await next();
+    Console.WriteLine("Middleware running after processing request");
+});
 
 app.Run();

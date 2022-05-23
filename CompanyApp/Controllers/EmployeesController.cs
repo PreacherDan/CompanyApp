@@ -7,7 +7,6 @@ using CompanyApp.Data;
 //using System.Data.SqlTypes;
 //using System.Data.SqlClient;
 
-
 namespace CompanyApp.Controllers
 {
     public class EmployeesController : Controller
@@ -30,8 +29,19 @@ namespace CompanyApp.Controllers
         [Route("employees/")]
         public async Task<IActionResult> Index()
         {
-            var empsWithDepts = await _context.Employees.Include(e => e.Department).Select(e => new EmployeeDTO(e)).ToListAsync<EmployeeDTO>();
+            var empsWithDepts = await _context.Employees.Include(e => e.Department).Select(e => new EmployeeDTO(e)).ToListAsync<EmployeeDTO>();            
             return View(empsWithDepts);
+        }
+
+        [Route("employeesPaged/{employeeAmount:int}/{pageIndex:int}")]
+        public async Task<IActionResult> IndexPaginated(int pageIndex, int employeeAmount)
+        {
+            return View("Index", _context.Employees
+                .Include(e => e.Department)
+                .Select(e => new EmployeeDTO(e))
+                .Skip(employeeAmount * (pageIndex - 1))
+                .Take(employeeAmount)
+                .ToList());
         }
 
         [Route("employees/details/{id}")]
@@ -48,7 +58,6 @@ namespace CompanyApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var depts = _context.Departments.ToList();
                 var viewModel = new EmployeeFormViewModel()
                 {
                     Employee = employee,
@@ -165,7 +174,7 @@ namespace CompanyApp.Controllers
             return View("DepartmentForm", new DepartmentDTO());
         }
 
-        [Route("department/edit")]
+        [Route("department/edit/{id}")]
         public IActionResult EditDepartment(int id)
         {
             var deptFromDb = _context.Departments.SingleOrDefault(d => d.ID == id);
